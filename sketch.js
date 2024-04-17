@@ -2,6 +2,7 @@ const NECK_OFFSET_X = 0.357
 const NECK_OFFSET_Y = 0.605
 const DEFAULT_NECK_LENGTH = 504
 const DEFAULT_NECK_ANGLE = -40
+const MINIMUM_NECK_LENGTH = 50
 const ROTATION_RATE = 0.5
 const TRANSLATION_RATE = 2
 
@@ -69,6 +70,7 @@ function draw() {
   }
   if (keyIsDown(DOWN_ARROW)) {
     neckLength -= TRANSLATION_RATE
+    if (neckLength < MINIMUM_NECK_LENGTH) neckLength = MINIMUM_NECK_LENGTH
     neckVector.setMag(neckLength)
   }
 
