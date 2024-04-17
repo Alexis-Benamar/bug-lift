@@ -3,7 +3,7 @@ const getCanvasHeight = () => windowWidth >= windowHeight * 1.5 ? windowHeight :
 const getCanvasWidth = () => windowWidth >= windowHeight * 1.5 ? windowHeight * 1.5 : windowWidth
 
 function setup() {
-  bg = loadImage('./background.webp')
+  bg = loadImage('./images/background.jpg')
   createCanvas(getCanvasWidth(), getCanvasHeight())
 }
 
