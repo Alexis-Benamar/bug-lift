@@ -1,6 +1,7 @@
+// TODO: set all sizes to fractions of height / width
 const NECK_OFFSET_X = 0.357
 const NECK_OFFSET_Y = 0.605
-const DEFAULT_NECK_LENGTH = 504
+const DEFAULT_NECK_LENGTH = 200
 const DEFAULT_NECK_ANGLE = -40
 const MINIMUM_NECK_LENGTH = 50
 const ROTATION_RATE = 0.5
@@ -49,6 +50,7 @@ function keyPressed() {
   if (key == 'r') {
     translate(neckX, neckY)
     neckAngle = DEFAULT_NECK_ANGLE
+    neckLength = DEFAULT_NECK_LENGTH
     neckVector.x = neckLength
     neckVector.y = 0
     neckVector.rotate(neckAngle)

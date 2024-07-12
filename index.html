@@ -9,5 +9,19 @@
     <script src="./sketch.js"></script>
   </head>
   <body>
+    <div class="instructions">
+      <img src="info.svg" class="instructions-icon" width="30" height="30" />
+      <div>
+        <p>⬆️⬇️ : change neck length</p>
+        <p>➡️⬅️ : rotate clockwise / counter clockwise</p>
+        <p>R : reset</p>
+      </div>
+    </div>
   </body>
+  <script>
+    const instructions = document.querySelector('.instructions')
+    instructions.addEventListener('click', () => {
+      instructions.classList.toggle('open')
+    })
+  </script>
 </html>

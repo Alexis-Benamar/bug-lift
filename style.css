@@ -33,3 +33,44 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.instructions {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  height: 50px;
+  max-width: 50px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.10);
+    cursor: pointer;
+  }
+}
+
+.instructions p {
+  /* max-width: 0; */
+  padding-inline: 10px;
+  margin: 0;
+  font-size: 14px;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.instructions.open {
+  /* max-width: 200px; */
+  height: 80px;
+  max-width: 350px;
+}
+
+.instructions-icon {
+  width: 30px;
+  height: 30px;
+}
