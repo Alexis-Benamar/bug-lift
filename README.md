@@ -2,6 +2,9 @@
 
 > _look at him go!_
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ee97cff2-8d00-4ec2-9b2a-1e5488201216/deploy-status)](https://app.netlify.com/sites/bug-lift/deploys)
+
+
 A silly little [p5.js](https://p5js.org/) project based on this silly little guy with an incredible neck. Now interactive!
 
 <img src="https://github.com/Alexis-Benamar/bug-lift/blob/main/images/background.webp?raw=true" width=400 />
