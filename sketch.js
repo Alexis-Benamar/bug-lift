@@ -25,11 +25,13 @@ const headHeight = 159
 const getCanvasHeight = () => windowWidth >= windowHeight * 1.5 ? windowHeight : windowWidth * (2/3)
 const getCanvasWidth = () => windowWidth >= windowHeight * 1.5 ? windowHeight * 1.5 : windowWidth
 
-function setup() {
+function preload() {
   bg = loadImage('./images/background.jpg')
   neck = loadImage('./images/neck.png')
   head = loadImage('./images/head.png')
+}
 
+function setup() {
   createCanvas(getCanvasWidth(), getCanvasHeight())
   angleMode(DEGREES);
 

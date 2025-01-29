@@ -7,8 +7,32 @@
     <title>bug lift 🐛</title>
     <script src="./p5.min.js"></script>
     <script src="./sketch.js"></script>
+    <style>
+      #p5_loading {
+        display: block;
+        z-index: 2;
+        margin: auto;
+        color: black;
+        text-align: center;
+        font-size: 48px;
+        animation: loading 1s ease-in-out 1s infinite;
+      }
+
+      @keyframes loading {
+        0% {
+          transform: scale(0.8);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(0.8);
+        }
+      }
+    </style>
   </head>
   <body>
+    <div id="p5_loading">🐛</div>
     <div class="instructions">
       <img src="info.svg" class="instructions-icon" width="30" height="30" />
       <div>
