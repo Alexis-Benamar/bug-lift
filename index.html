@@ -50,9 +50,12 @@
   </body>
   <script>
     const helpModal = document.querySelector('#help-modal')
+    const modalContent = document.querySelector('#help-modal > .content')
     const showButton = document.querySelector("#help-modal + button");
 
     showButton.addEventListener('click', () => helpModal.showModal())
+    modalContent.addEventListener('click', e => e.stopPropagation())
+    helpModal.addEventListener('click', () => helpModal.close())
 
     const userAgent = navigator.userAgent
     const regexp = /android|iphone|kindle|ipad/i
