@@ -21,8 +21,6 @@ let head
 const headLength = 213
 const headHeight = 159
 
-let isMobileDevice
-
 const getCanvasHeight = () => windowWidth >= windowHeight * 1.5 ? windowHeight : windowWidth * (2/3)
 const getCanvasWidth = () => windowWidth >= windowHeight * 1.5 ? windowHeight * 1.5 : windowWidth
 
@@ -40,11 +38,6 @@ function setup() {
   neckY = height * NECK_OFFSET_Y
   neckVector = createVector(neckLength, 0)
   neckVector.rotate(neckAngle)
-
-  let details = navigator.userAgent;
-  let regexp = /android|iphone|kindle|ipad/i;
-  isMobileDevice = regexp.test(details);
-  console.log(isMobileDevice)
 }
 
 function windowResized() {
@@ -65,8 +58,8 @@ function keyPressed() {
   }
 }
 
-function draw() {
-  // Rotate / resize neck
+
+function moveNeckFromWithKeyboard() {
   if (keyIsDown(RIGHT_ARROW)) {
     neckAngle += ROTATION_RATE
     neckVector.rotate(ROTATION_RATE)
@@ -84,7 +77,9 @@ function draw() {
     if (neckLength < MINIMUM_NECK_LENGTH) neckLength = MINIMUM_NECK_LENGTH
     neckVector.setMag(neckLength)
   }
+}
 
+function draw() {
   // Draw background & move origin to neck base
   background(bg)
   translate(neckX, neckY)
@@ -101,4 +96,10 @@ function draw() {
   image(head, -headLength*0.05, -headHeight*0.88, headLength, headHeight)
   pop()
 
+  // Rotate / resize neck
+  if (isMobileDevice) {
+    // TODO: move with "joystick"
+  } else {
+    moveNeckFromWithKeyboard()
+  }
 }

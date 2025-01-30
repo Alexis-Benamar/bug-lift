@@ -34,19 +34,32 @@
   </head>
   <body>
     <div id="p5_loading">🐛</div>
-    <div class="instructions">
-      <img src="info.svg" class="instructions-icon" width="30" height="30" />
-      <div>
+    <dialog id="help-modal">
+      <div class="content">
         <p>⬆️⬇️ : change neck length</p>
         <p>➡️⬅️ : rotate clockwise / counter clockwise</p>
         <p>R : reset</p>
+        <form method="dialog">
+          <button class="close-modal">Close</button>
+        </form>
       </div>
-    </div>
+    </dialog>
+    <button>
+      <img src="info.svg" width="30" height="30" />
+    </button>
   </body>
   <script>
-    const instructions = document.querySelector('.instructions')
-    instructions.addEventListener('click', () => {
-      instructions.classList.toggle('open')
-    })
+    const helpModal = document.querySelector('#help-modal')
+    const showButton = document.querySelector("#help-modal + button");
+
+    showButton.addEventListener('click', () => helpModal.showModal())
+
+    const userAgent = navigator.userAgent
+    const regexp = /android|iphone|kindle|ipad/i
+    const isMobileDevice = regexp.test(userAgent)
+
+    if (isMobileDevice) {
+      showButton.style.display = 'none'
+    }
   </script>
 </html>
