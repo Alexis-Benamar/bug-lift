@@ -20,7 +20,8 @@ let neckAngle = DEFAULT_NECK_ANGLE
 let head
 const headLength = 213
 const headHeight = 159
-// let headAngle = neckAngle + 40
+
+let isMobileDevice
 
 const getCanvasHeight = () => windowWidth >= windowHeight * 1.5 ? windowHeight : windowWidth * (2/3)
 const getCanvasWidth = () => windowWidth >= windowHeight * 1.5 ? windowHeight * 1.5 : windowWidth
@@ -39,6 +40,11 @@ function setup() {
   neckY = height * NECK_OFFSET_Y
   neckVector = createVector(neckLength, 0)
   neckVector.rotate(neckAngle)
+
+  let details = navigator.userAgent;
+  let regexp = /android|iphone|kindle|ipad/i;
+  isMobileDevice = regexp.test(details);
+  console.log(isMobileDevice)
 }
 
 function windowResized() {
@@ -48,7 +54,7 @@ function windowResized() {
 }
 
 function keyPressed() {
-  // Reset neck & head pos by pressing 'R'
+  // Reset neck & head pos
   if (key == 'r') {
     translate(neckX, neckY)
     neckAngle = DEFAULT_NECK_ANGLE
@@ -60,6 +66,7 @@ function keyPressed() {
 }
 
 function draw() {
+  // Rotate / resize neck
   if (keyIsDown(RIGHT_ARROW)) {
     neckAngle += ROTATION_RATE
     neckVector.rotate(ROTATION_RATE)
@@ -91,7 +98,7 @@ function draw() {
   // Draw head on tip of neck
   push()
   translate(neckVector.x, neckVector.y)
-  // rotate(headAngle)
   image(head, -headLength*0.05, -headHeight*0.88, headLength, headHeight)
   pop()
+
 }
