@@ -1,7 +1,5 @@
-// TODO: set all sizes to fractions of height / width
 const NECK_OFFSET_X = 0.357
 const NECK_OFFSET_Y = 0.605
-const DEFAULT_NECK_LENGTH = 200
 const DEFAULT_NECK_ANGLE = -40
 const MINIMUM_NECK_LENGTH = 50
 const ROTATION_RATE = 0.5
@@ -9,7 +7,11 @@ const TRANSLATION_RATE = 2
 const GUI_PADDING = 5
 const BTN_SIDE = 40
 
-let gui
+// Used to size head & neck based on width
+const HEAD_LENGTH_FACTOR = 5
+const HEAD_HEIGHT_FACTOR = 7
+const NECK_WIDTH_FACTOR = 35
+const NECK_LENGTH_FACTOR = 4
 
 let bg
 
@@ -17,21 +19,39 @@ let neck
 let neckX
 let neckY
 let neckVector
-let neckLength = DEFAULT_NECK_LENGTH
-const neckWidth = 31
+let neckLength
+let neckWidth
 let neckAngle = DEFAULT_NECK_ANGLE
 
 let head
-const headLength = 213
-const headHeight = 159
+let headLength
+let headHeight
 
+let gui
 let up
 let down
 let left
 let right
+let reset
 
 const getCanvasHeight = () => windowWidth >= windowHeight * 1.5 ? windowHeight : windowWidth * (2/3)
 const getCanvasWidth = () => windowWidth >= windowHeight * 1.5 ? windowHeight * 1.5 : windowWidth
+
+function resetNeck() {
+  neckWidth = getCanvasWidth() / NECK_WIDTH_FACTOR
+  neckLength = getCanvasWidth() / NECK_LENGTH_FACTOR
+  neckAngle = DEFAULT_NECK_ANGLE
+  neckX = width * NECK_OFFSET_X
+  neckY = height * NECK_OFFSET_Y
+  neckVector.x = neckLength
+  neckVector.y = 0
+  neckVector.rotate(neckAngle)
+}
+
+function resetHead() {
+  headLength = width / HEAD_LENGTH_FACTOR
+  headHeight = width / HEAD_HEIGHT_FACTOR
+}
 
 function preload() {
   bg = loadImage('./images/background.jpg')
@@ -43,13 +63,14 @@ function setup() {
   createCanvas(getCanvasWidth(), getCanvasHeight())
   angleMode(DEGREES);
 
-  neckX = width * NECK_OFFSET_X
-  neckY = height * NECK_OFFSET_Y
+  // Setup neck vector & size
   neckVector = createVector(neckLength, 0)
-  neckVector.rotate(neckAngle)
+  resetNeck()
+
+  // Setup head size
+  resetHead()
 
   if (isMobileDevice) {
-    gui = createGui()
     const BTN_STYLE = {
       strokeWeight: 0,
       rounding: 3,
@@ -59,12 +80,17 @@ function setup() {
       fillLabelActive: color(255)
     }
 
+    gui = createGui()
+
     up = createButton('▲', GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
     down = createButton('▼', BTN_SIDE + GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    reset = createButton('R', getCanvasWidth() - BTN_SIDE * 3 - GUI_PADDING * 3, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
     left = createButton('◄', getCanvasWidth() - BTN_SIDE * 2 - GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
     right = createButton('►', getCanvasWidth() - BTN_SIDE - GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+
     up.setStyle(BTN_STYLE)
     down.setStyle(BTN_STYLE)
+    reset.setStyle(BTN_STYLE)
     left.setStyle(BTN_STYLE)
     right.setStyle(BTN_STYLE)
   }
@@ -72,22 +98,21 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(getCanvasWidth(), getCanvasHeight())
-  neckX = width * NECK_OFFSET_X
-  neckY = height * NECK_OFFSET_Y
+  resetNeck()
+  resetHead()
+}
+
+function resetAction() {
+  translate(neckX, neckY)
+  resetNeck()
 }
 
 function keyPressed() {
   // Reset neck & head pos
   if (key == 'r') {
-    translate(neckX, neckY)
-    neckAngle = DEFAULT_NECK_ANGLE
-    neckLength = DEFAULT_NECK_LENGTH
-    neckVector.x = neckLength
-    neckVector.y = 0
-    neckVector.rotate(neckAngle)
+    resetAction()
   }
 }
-
 
 function moveNeck() {
   if (keyIsDown(RIGHT_ARROW) || (isMobileDevice && right.isHeld)) {
@@ -135,4 +160,9 @@ function draw() {
 
   // Rotate / resize neck
   moveNeck()
+
+  // Reset for mobile action
+  if (isMobileDevice && reset.isPressed) {
+    resetAction()
+  }
 }
