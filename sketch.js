@@ -6,8 +6,8 @@ const DEFAULT_NECK_ANGLE = -40
 const MINIMUM_NECK_LENGTH = 50
 const ROTATION_RATE = 0.5
 const TRANSLATION_RATE = 2
-const BTN_SIDE = 40
 const GUI_PADDING = 5
+const BTN_SIDE = 40
 
 let gui
 
@@ -50,10 +50,23 @@ function setup() {
 
   if (isMobileDevice) {
     gui = createGui()
-    up = createButton('^', GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
-    down = createButton('v', BTN_SIDE + GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
-    left = createButton('<', getCanvasWidth() - BTN_SIDE * 2 - GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
-    right = createButton('>', getCanvasWidth() - BTN_SIDE - GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    const BTN_STYLE = {
+      strokeWeight: 0,
+      rounding: 3,
+      fillBg: color(0, 255 * 0.6),
+      fillBgActive: color(0, 255 * 0.4),
+      fillLabel: color(255),
+      fillLabelActive: color(255)
+    }
+
+    up = createButton('▲', GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    down = createButton('▼', BTN_SIDE + GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    left = createButton('◄', getCanvasWidth() - BTN_SIDE * 2 - GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    right = createButton('►', getCanvasWidth() - BTN_SIDE - GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    up.setStyle(BTN_STYLE)
+    down.setStyle(BTN_STYLE)
+    left.setStyle(BTN_STYLE)
+    right.setStyle(BTN_STYLE)
   }
 }
 
