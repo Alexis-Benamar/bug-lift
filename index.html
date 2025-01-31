@@ -2,10 +2,12 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="public/favicon.png" />
     <link rel="stylesheet" href="./style.css">
     <title>bug lift 🐛</title>
     <script src="./p5.min.js"></script>
+    <script src="https://unpkg.com/p5.touchgui@0.5.2/lib/p5.touchgui.js"></script>
     <script src="./sketch.js"></script>
     <style>
       #p5_loading {
@@ -33,19 +35,35 @@
   </head>
   <body>
     <div id="p5_loading">🐛</div>
-    <div class="instructions">
-      <img src="info.svg" class="instructions-icon" width="30" height="30" />
-      <div>
+    <dialog id="help-modal">
+      <div class="content">
         <p>⬆️⬇️ : change neck length</p>
         <p>➡️⬅️ : rotate clockwise / counter clockwise</p>
         <p>R : reset</p>
+        <form method="dialog">
+          <button class="close-modal">Close</button>
+        </form>
       </div>
-    </div>
+    </dialog>
+    <button>
+      <img src="info.svg" width="30" height="30" />
+    </button>
   </body>
   <script>
-    const instructions = document.querySelector('.instructions')
-    instructions.addEventListener('click', () => {
-      instructions.classList.toggle('open')
-    })
+    const helpModal = document.querySelector('#help-modal')
+    const modalContent = document.querySelector('#help-modal > .content')
+    const showButton = document.querySelector("#help-modal + button");
+
+    showButton.addEventListener('click', () => helpModal.showModal())
+    modalContent.addEventListener('click', e => e.stopPropagation())
+    helpModal.addEventListener('click', () => helpModal.close())
+
+    const userAgent = navigator.userAgent
+    const regexp = /android|iphone|kindle|ipad/i
+    const isMobileDevice = regexp.test(userAgent)
+
+    if (isMobileDevice) {
+      showButton.style.display = 'none'
+    }
   </script>
 </html>

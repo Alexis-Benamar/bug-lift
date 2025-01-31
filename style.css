@@ -16,6 +16,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
 main {
   width: 100%;
 }
@@ -34,43 +41,51 @@ body {
   min-height: 100vh;
 }
 
-.instructions {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+#help-modal {
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  height: 50px;
-  max-width: 50px;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.15);
-  transition: all .3s ease-in-out;
-  overflow: hidden;
+  max-width: 300px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.8);
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.10);
-    cursor: pointer;
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  .content {
+    box-sizing: inherit;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 2rem;
+
+    .close-modal {
+      display: block;
+      margin-left: auto;
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
   }
 }
 
-.instructions p {
-  /* max-width: 0; */
-  padding-inline: 10px;
-  margin: 0;
-  font-size: 14px;
-  text-wrap: nowrap;
-  overflow: hidden;
+#help-modal + button {
+  background-color: rgba(0, 0, 0, 0.15);
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+
+  &:hover, &:active {
+    background-color: rgba(0, 0, 0, 0.20);
+  }
 }
 
-.instructions.open {
-  /* max-width: 200px; */
-  height: 80px;
-  max-width: 350px;
-}
-
-.instructions-icon {
-  width: 30px;
-  height: 30px;
-}
