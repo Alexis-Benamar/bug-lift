@@ -6,6 +6,10 @@ const DEFAULT_NECK_ANGLE = -40
 const MINIMUM_NECK_LENGTH = 50
 const ROTATION_RATE = 0.5
 const TRANSLATION_RATE = 2
+const BTN_SIDE = 40
+const GUI_PADDING = 5
+
+let gui
 
 let bg
 
@@ -20,6 +24,11 @@ let neckAngle = DEFAULT_NECK_ANGLE
 let head
 const headLength = 213
 const headHeight = 159
+
+let up
+let down
+let left
+let right
 
 const getCanvasHeight = () => windowWidth >= windowHeight * 1.5 ? windowHeight : windowWidth * (2/3)
 const getCanvasWidth = () => windowWidth >= windowHeight * 1.5 ? windowHeight * 1.5 : windowWidth
@@ -38,6 +47,14 @@ function setup() {
   neckY = height * NECK_OFFSET_Y
   neckVector = createVector(neckLength, 0)
   neckVector.rotate(neckAngle)
+
+  if (isMobileDevice) {
+    gui = createGui()
+    up = createButton('^', GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    down = createButton('v', BTN_SIDE + GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    left = createButton('<', getCanvasWidth() - BTN_SIDE * 2 - GUI_PADDING * 2, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+    right = createButton('>', getCanvasWidth() - BTN_SIDE - GUI_PADDING, getCanvasHeight() - BTN_SIDE - GUI_PADDING, BTN_SIDE, BTN_SIDE)
+  }
 }
 
 function windowResized() {
@@ -59,20 +76,20 @@ function keyPressed() {
 }
 
 
-function moveNeckFromWithKeyboard() {
-  if (keyIsDown(RIGHT_ARROW)) {
+function moveNeck() {
+  if (keyIsDown(RIGHT_ARROW) || (isMobileDevice && right.isHeld)) {
     neckAngle += ROTATION_RATE
     neckVector.rotate(ROTATION_RATE)
   }
-  if (keyIsDown(LEFT_ARROW)) {
+  if (keyIsDown(LEFT_ARROW) || (isMobileDevice && left.isHeld)) {
     neckAngle -= ROTATION_RATE
     neckVector.rotate(-ROTATION_RATE)
   }
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(UP_ARROW) || (isMobileDevice && up.isHeld)) {
     neckLength += TRANSLATION_RATE
     neckVector.setMag(neckLength)
   }
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(DOWN_ARROW) || (isMobileDevice && down.isHeld)) {
     neckLength -= TRANSLATION_RATE
     if (neckLength < MINIMUM_NECK_LENGTH) neckLength = MINIMUM_NECK_LENGTH
     neckVector.setMag(neckLength)
@@ -80,8 +97,15 @@ function moveNeckFromWithKeyboard() {
 }
 
 function draw() {
-  // Draw background & move origin to neck base
+  // Draw background
   background(bg)
+
+  // Draw buttons for mobile controls
+  if (isMobileDevice) {
+    drawGui()
+  }
+
+  // Move origin to neck base for drawing the moving parts
   translate(neckX, neckY)
 
   // Draw neck at neckAngle
@@ -97,9 +121,5 @@ function draw() {
   pop()
 
   // Rotate / resize neck
-  if (isMobileDevice) {
-    // TODO: move with "joystick"
-  } else {
-    moveNeckFromWithKeyboard()
-  }
+  moveNeck()
 }
