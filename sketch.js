@@ -75,8 +75,10 @@ function setup() {
       strokeWeight: 0,
       rounding: 3,
       fillBg: color(0, 255 * 0.6),
+      fillBgHover: color(0, 255 * 0.4),
       fillBgActive: color(0, 255 * 0.4),
       fillLabel: color(255),
+      fillLabelHover: color(255),
       fillLabelActive: color(255)
     }
 
